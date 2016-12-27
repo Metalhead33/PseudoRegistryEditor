@@ -28,11 +28,21 @@ private slots:
 
     void on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
+    void on_buttonAcceptChanges_clicked();
+
+    void on_revertButton_clicked();
+
+    void on_DeleteButton_clicked();
+
 private:
+    QTreeWidgetItem* cur_item;
     IndexContainer elements;
     QTreeWidgetItem* LookupIndex(Structure::Element* elem);
     void addElement(Structure::Element* elem);
     Ui::MainWindow *ui;
+
+    void DeleteElement(QTreeWidgetItem *item);
+    void UpdateDisplayer();
 };
 
 #endif // MAINWINDOW_HPP
