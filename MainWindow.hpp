@@ -34,6 +34,10 @@ private slots:
 
     void on_DeleteButton_clicked();
 
+    void on_RenameButton_clicked();
+
+    void on_RevertName_clicked();
+
 private:
     QTreeWidgetItem* cur_item;
     IndexContainer elements;

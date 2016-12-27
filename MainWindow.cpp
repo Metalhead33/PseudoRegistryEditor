@@ -153,22 +153,12 @@ void MainWindow::UpdateDisplayer()
     }
     else
     {
-        if(elem->IsDirectory())
-        {
-            ui->plainTextEdit->show();
-            ui->buttonAcceptChanges->show();
-            ui->revertButton->show();
-            ui->comboBox->hide();
-            ui->plainTextEdit->resize(ui->plainTextEdit->width(),32);
-            ui->plainTextEdit->setPlainText(QString::fromStdString(((Structure::Directory*)elem)->GetName())   );
-        }
-        else {
         ui->plainTextEdit->hide();
         ui->buttonAcceptChanges->hide();
         ui->revertButton->hide();
         ui->comboBox->hide();
-        }
     }
+    ui->NameEditor->setPlainText(QString::fromStdString(elem->GetName() )  );
 }
 
 void MainWindow::on_buttonAcceptChanges_clicked()
@@ -260,14 +250,6 @@ void MainWindow::on_buttonAcceptChanges_clicked()
         }
         }
     }
-    else
-    {
-        if(elem->IsDirectory())
-        {
-            elem->SetName(ui->plainTextEdit->toPlainText().toStdString());
-            cur_item->setText(0,ui->plainTextEdit->toPlainText());
-        }
-    }
     UpdateDisplayer();
 }
 
@@ -322,4 +304,19 @@ void MainWindow::DeleteElement(QTreeWidgetItem *item)
     }
     elements.erase(elements.find(item));
     delete item;*/
+}
+
+void MainWindow::on_RenameButton_clicked()
+{
+    if(cur_item)
+    {
+        cur_item->setText(0,ui->NameEditor->toPlainText() );
+        elements.find(cur_item)->second->SetName(ui->NameEditor->toPlainText().toStdString() );
+    }
+    UpdateDisplayer();
+}
+
+void MainWindow::on_RevertName_clicked()
+{
+    UpdateDisplayer();
 }
