@@ -14,8 +14,10 @@ TEMPLATE = app
 LIBS += -L"/usr/local/lib" -lRegistryStructure
 
 SOURCES += main.cpp\
-        MainWindow.cpp
+        MainWindow.cpp \
+    ElementContainerItem.cpp
 
-HEADERS  += MainWindow.hpp
+HEADERS  += MainWindow.hpp \
+    ElementContainerItem.hpp
 
 FORMS    += MainWindow.ui
