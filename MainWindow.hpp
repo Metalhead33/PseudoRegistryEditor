@@ -33,6 +33,7 @@ private:
     QModelIndex cur_index;
     void UpdateName();
     void UpdateElement();
+    void UpdateDisplay();
 };
 
 #endif // MAINWINDOW_HPP

@@ -24,8 +24,9 @@ void MainWindow::UpdateName()
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
     cur_index = index;
-    cur_elem = (Structure::Element*)cur_index.internalPointer();
+    UpdateElement();
     UpdateName();
+    UpdateDisplay();
 }
 
 void MainWindow::on_RevertNameButton_clicked()
@@ -43,7 +44,106 @@ void MainWindow::on_AcceptNameChange_clicked()
 }
 void MainWindow::UpdateElement()
 {
-    cur_elem = (Structure::Element*)cur_index.internalPointer();
+    if(cur_index.isValid()) cur_elem = (Structure::Element*)cur_index.internalPointer();
+    else cur_elem = 0;
+}
+void MainWindow::UpdateDisplay()
+{
+    if(cur_elem)
+    {
+        if(cur_elem->IsDirectory())
+        {
+            ui->ContextEditor->setHidden(true);
+            ui->AcceptChangesButton->setHidden(true);
+            ui->RevertButton->setHidden(true);
+        }
+        else
+        {
+        ui->ContextEditor->setHidden(false);
+        ui->AcceptChangesButton->setHidden(false);
+        ui->RevertButton->setHidden(false);
+        Structure::File* fail = (Structure::File*)cur_elem;
+            switch(fail->GetFiletype())
+            {
+            case Structure::File::BOOL:
+            {
+                ui->ContextEditor->resize(ui->ContextEditor->width(),32);
+                if( ((Structure::BooleanFile*)fail)->GetContent()  ) ui->ContextEditor->setPlainText(QString("true"));
+                else ui->ContextEditor->setPlainText(QString("false"));
+                break;
+            }
+            case Structure::File::STRING:
+            {
+                ui->ContextEditor->resize(ui->ContextEditor->width(),120);
+                ui->ContextEditor->setPlainText(QString::fromStdString(((Structure::StringFile*)fail)->GetContent()   ));
+                break;
+            }
+            case Structure::File::STRING16:
+            {
+                ui->ContextEditor->resize(ui->ContextEditor->width(),120);
+                ui->ContextEditor->setPlainText(QString::fromStdU16String(((Structure::String16File*)fail)->GetContent())  );
+                break;
+            }
+            case Structure::File::STRING32:
+            {
+                ui->ContextEditor->resize(ui->ContextEditor->width(),120);
+                ui->ContextEditor->setPlainText(QString::fromStdU32String(((Structure::String32File*)fail)->GetContent())  );
+                break;
+            }
+            case Structure::File::UINT8:
+            {
+                ui->ContextEditor->resize(ui->ContextEditor->width(),32);
+                std::stringstream convert;
+                convert << ((Structure::Uint8File*)fail)->GetContent();
+                ui->ContextEditor->setPlainText(QString::fromStdString(convert.str( ))  );
+                break;
+            }
+            case Structure::File::SINT8:
+            {
+                ui->ContextEditor->resize(ui->ContextEditor->width(),32);
+                std::stringstream convert;
+                convert << ((Structure::Int8File*)fail)->GetContent();
+                ui->ContextEditor->setPlainText(QString::fromStdString(convert.str( ))  );
+                break;
+            }
+            case Structure::File::UINT64:
+            {
+                ui->ContextEditor->resize(ui->ContextEditor->width(),32);
+                std::stringstream convert;
+                convert << ((Structure::Uint64File*)fail)->GetContent();
+                ui->ContextEditor->setPlainText(QString::fromStdString(convert.str( ))  );
+                break;
+            }
+            case Structure::File::SINT64:
+            {
+                ui->ContextEditor->resize(ui->ContextEditor->width(),32);
+                std::stringstream convert;
+                convert << ((Structure::Int64File*)fail)->GetContent();
+                ui->ContextEditor->setPlainText(QString::fromStdString(convert.str( ))  );
+                break;
+            }
+            case Structure::File::FLOAT:
+            {
+                ui->ContextEditor->resize(ui->ContextEditor->width(),32);
+                std::stringstream convert;
+                convert << ((Structure::FloatFile*)fail)->GetContent();
+                ui->ContextEditor->setPlainText(QString::fromStdString(convert.str( ))  );
+                break;
+            }
+            default:
+            {
+                ui->ContextEditor->clear();
+                break;
+            }
+            }
+        }
+    }
+    else
+    {
+        ui->ContextEditor->setHidden(true);
+        ui->AcceptChangesButton->setHidden(true);
+        ui->RevertButton->setHidden(true);
+    }
 }
 
 void MainWindow::on_DeleteButton_clicked()
