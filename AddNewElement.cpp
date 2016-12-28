@@ -21,34 +21,34 @@ void AddNewElement::on_buttonBox_accepted()
     {
         switch(ui->comboBox->currentIndex() )
         {
-        case 1:
+        case 0:
             m_container->AddDirectory(m_index,ui->plainTextEdit->toPlainText());
             break;
-        case 2:
+        case 1:
             m_container->AddFile(m_index,Structure::File::BOOL,ui->plainTextEdit->toPlainText());
             break;
-        case 3:
+        case 2:
             m_container->AddFile(m_index,Structure::File::UINT8,ui->plainTextEdit->toPlainText());
             break;
-        case 4:
+        case 3:
             m_container->AddFile(m_index,Structure::File::SINT8,ui->plainTextEdit->toPlainText());
             break;
-        case 5:
+        case 4:
             m_container->AddFile(m_index,Structure::File::UINT64,ui->plainTextEdit->toPlainText());
             break;
-        case 6:
+        case 5:
             m_container->AddFile(m_index,Structure::File::SINT64,ui->plainTextEdit->toPlainText());
             break;
-        case 7:
+        case 6:
             m_container->AddFile(m_index,Structure::File::FLOAT,ui->plainTextEdit->toPlainText());
             break;
-        case 8:
+        case 7:
             m_container->AddFile(m_index,Structure::File::STRING,ui->plainTextEdit->toPlainText());
             break;
-        case 9:
+        case 8:
             m_container->AddFile(m_index,Structure::File::STRING16,ui->plainTextEdit->toPlainText());
             break;
-        case 10:
+        case 9:
             m_container->AddFile(m_index,Structure::File::STRING32,ui->plainTextEdit->toPlainText());
             break;
         default:

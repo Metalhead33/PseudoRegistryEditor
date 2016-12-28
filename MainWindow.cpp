@@ -77,8 +77,8 @@ void MainWindow::UpdateDisplay()
                 ui->ContextEditor->resize(ui->ContextEditor->width(),32);
                 ui->ContextEditor->setHidden(true);
                 ui->BooleanCombobox->setHidden(false);
-                if(((Structure::BooleanFile*)fail)->GetContent()) ui->BooleanCombobox->setCurrentIndex(2);
-                else ui->BooleanCombobox->setCurrentIndex(1);
+                if(((Structure::BooleanFile*)fail)->GetContent()) ui->BooleanCombobox->setCurrentIndex(1);
+                else ui->BooleanCombobox->setCurrentIndex(0);
                 break;
             }
             case Structure::File::STRING:
@@ -184,7 +184,7 @@ void MainWindow::on_AcceptChangesButton_clicked()
             {
             case Structure::File::BOOL:
             {
-                if(ui->BooleanCombobox->currentIndex() == 2) ((Structure::BooleanFile*)fail)->SetContent(true);
+                if(ui->BooleanCombobox->currentIndex()) ((Structure::BooleanFile*)fail)->SetContent(true);
                 else ((Structure::BooleanFile*)fail)->SetContent(false);
                 break;
             }
