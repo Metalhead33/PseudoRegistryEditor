@@ -27,6 +27,10 @@ private slots:
 
     void on_DeleteButton_clicked();
 
+    void on_RevertButton_clicked();
+
+    void on_AcceptChangesButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Structure::Element* cur_elem;
