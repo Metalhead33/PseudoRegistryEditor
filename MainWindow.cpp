@@ -1,6 +1,7 @@
 #include "MainWindow.hpp"
 #include "ui_MainWindow.h"
 #include <sstream>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -272,4 +273,11 @@ void MainWindow::on_NewElementButton_clicked()
 {
     element_adder = new AddNewElement(this,container,cur_index);
     element_adder->show();
+}
+
+void MainWindow::on_actionSave_File_triggered()
+{
+    QString filename = QFileDialog::getSaveFileName(this);
+    FILE* faile = fopen(filename.toStdString().c_str(),"wb");
+    if(faile) ((ElementContainerItem*)ui->treeView->model())->GetRoot()->Serialize(faile);
 }

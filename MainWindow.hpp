@@ -34,6 +34,8 @@ private slots:
 
     void on_NewElementButton_clicked();
 
+    void on_actionSave_File_triggered();
+
 private:
     Structure::Element* cur_elem;
     QModelIndex cur_index;

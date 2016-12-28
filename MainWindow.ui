@@ -170,7 +170,7 @@ font: 75 12pt &quot;Times New Roman&quot;;</string>
    </property>
    <widget class="QMenu" name="menuRegistry_Editor">
     <property name="title">
-     <string>&amp;Registry Editor</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="separator"/>
     <addaction name="actionOpen_File"/>

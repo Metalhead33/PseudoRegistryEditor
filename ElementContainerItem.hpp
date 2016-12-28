@@ -6,6 +6,8 @@
 
 class ElementContainerItem : public QAbstractItemModel
 {
+private:
+    Structure::Directory* root_dir;
 public:
     ElementContainerItem();
     QModelIndex index(int row, int column, const QModelIndex &parent) const;
@@ -17,8 +19,7 @@ public:
     //bool AddElement(const QModelIndex &parent,Structure::Element* elem);
     bool AddDirectory(const QModelIndex &parent,QString name);
     bool AddFile(const QModelIndex &parent,Structure::File::FileType type, QString name);
-private:
-    Structure::Directory* root_dir;
+    Structure::Directory* GetRoot() const { return root_dir; }
 };
 
 #endif // ELEMENTCONTAINERITEM_H
