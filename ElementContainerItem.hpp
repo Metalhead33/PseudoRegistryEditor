@@ -14,6 +14,9 @@ public:
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+    //bool AddElement(const QModelIndex &parent,Structure::Element* elem);
+    bool AddDirectory(const QModelIndex &parent,QString name);
+    bool AddFile(const QModelIndex &parent,Structure::File::FileType type, QString name);
 private:
     Structure::Directory* root_dir;
 };

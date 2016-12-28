@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>553</width>
-    <height>328</height>
+    <height>376</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       <x>10</x>
       <y>0</y>
       <width>241</width>
-      <height>261</height>
+      <height>301</height>
      </rect>
     </property>
     <attribute name="headerVisible">
@@ -124,6 +124,26 @@ font: 75 12pt &quot;Times New Roman&quot;;</string>
     <property name="text">
      <string>Delete</string>
     </property>
+   </widget>
+   <widget class="QComboBox" name="BooleanCombobox">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>130</y>
+      <width>111</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>False</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>True</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

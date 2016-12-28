@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->treeView->setModel(new ElementContainerItem());
+    cur_elem = 0;
+    UpdateDisplay();
+    UpdateName();
 }
 
 MainWindow::~MainWindow()
@@ -56,20 +59,24 @@ void MainWindow::UpdateDisplay()
             ui->ContextEditor->setHidden(true);
             ui->AcceptChangesButton->setHidden(true);
             ui->RevertButton->setHidden(true);
+            ui->BooleanCombobox->setHidden(true);
         }
         else
         {
         ui->ContextEditor->setHidden(false);
         ui->AcceptChangesButton->setHidden(false);
         ui->RevertButton->setHidden(false);
+        ui->BooleanCombobox->setHidden(true);
         Structure::File* fail = (Structure::File*)cur_elem;
             switch(fail->GetFiletype())
             {
             case Structure::File::BOOL:
             {
                 ui->ContextEditor->resize(ui->ContextEditor->width(),32);
-                if( ((Structure::BooleanFile*)fail)->GetContent()  ) ui->ContextEditor->setPlainText(QString("true"));
-                else ui->ContextEditor->setPlainText(QString("false"));
+                ui->ContextEditor->setHidden(true);
+                ui->BooleanCombobox->setHidden(false);
+                if(((Structure::BooleanFile*)fail)->GetContent()) ui->BooleanCombobox->setCurrentIndex(2);
+                else ui->BooleanCombobox->setCurrentIndex(1);
                 break;
             }
             case Structure::File::STRING:
@@ -143,6 +150,7 @@ void MainWindow::UpdateDisplay()
         ui->ContextEditor->setHidden(true);
         ui->AcceptChangesButton->setHidden(true);
         ui->RevertButton->setHidden(true);
+        ui->BooleanCombobox->setHidden(true);
     }
 }
 
@@ -172,6 +180,12 @@ void MainWindow::on_AcceptChangesButton_clicked()
             Structure::File* fail = (Structure::File*)cur_elem;
             switch(fail->GetFiletype())
             {
+            case Structure::File::BOOL:
+            {
+                if(ui->BooleanCombobox->currentIndex() == 2) ((Structure::BooleanFile*)fail)->SetContent(true);
+                else ((Structure::BooleanFile*)fail)->SetContent(false);
+                break;
+            }
             case Structure::File::STRING:
             {
                 ((Structure::StringFile*)fail)->SetContent(ui->ContextEditor->toPlainText().toStdString()  );

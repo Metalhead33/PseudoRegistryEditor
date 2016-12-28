@@ -5,6 +5,118 @@ ElementContainerItem::ElementContainerItem()
 {
     root_dir = Structure::ROOT_DIRECTORY;
 }
+/*bool ElementContainerItem::AddElement(const QModelIndex &parent,Structure::Element* elem)
+{
+    if(parent.isValid())
+    {
+        if(elem)
+        {
+            beginInsertRows(parent,parent.row()+1,parent.row()+1);
+            endInsertRows();
+            return true;
+        }
+        else return false;
+    }
+    else return false;
+}*/
+bool ElementContainerItem::AddDirectory(const QModelIndex &parent,QString name)
+{
+    if(parent.isValid())
+    {
+         beginInsertRows(parent,parent.row()+1,parent.row()+1);
+         new Structure::Directory(name.toStdString(),(Structure::Directory*)parent.internalPointer() );
+         endInsertRows();
+         return true;
+    }
+    else return false;
+}
+bool ElementContainerItem::AddFile(const QModelIndex &parent,Structure::File::FileType type, QString name)
+{
+    if(parent.isValid())
+    {
+        switch(type)
+        {
+        case Structure::File::BOOL :
+        {
+            beginInsertRows(parent,parent.row()+1,parent.row()+1);
+            new Structure::BooleanFile(false,name.toStdString(),(Structure::Directory*)parent.internalPointer() );
+            endInsertRows();
+            return true;
+            break;
+        }
+        case Structure::File::UINT8 :
+        {
+            beginInsertRows(parent,parent.row()+1,parent.row()+1);
+            new Structure::Uint8File(0,name.toStdString(),(Structure::Directory*)parent.internalPointer() );
+            endInsertRows();
+            return true;
+            break;
+        }
+        case Structure::File::UINT64 :
+        {
+            beginInsertRows(parent,parent.row()+1,parent.row()+1);
+            new Structure::Uint64File(0,name.toStdString(),(Structure::Directory*)parent.internalPointer() );
+            endInsertRows();
+            return true;
+            break;
+        }
+        case Structure::File::SINT8 :
+        {
+            beginInsertRows(parent,parent.row()+1,parent.row()+1);
+            new Structure::Int8File(0,name.toStdString(),(Structure::Directory*)parent.internalPointer() );
+            endInsertRows();
+            return true;
+            break;
+        }
+        case Structure::File::SINT64 :
+        {
+            beginInsertRows(parent,parent.row()+1,parent.row()+1);
+            new Structure::Int64File(0,name.toStdString(),(Structure::Directory*)parent.internalPointer() );
+            endInsertRows();
+            return true;
+            break;
+        }
+        case Structure::File::FLOAT :
+        {
+            beginInsertRows(parent,parent.row()+1,parent.row()+1);
+            new Structure::FloatFile(0,name.toStdString(),(Structure::Directory*)parent.internalPointer() );
+            endInsertRows();
+            return true;
+            break;
+        }
+        case Structure::File::STRING :
+        {
+            beginInsertRows(parent,parent.row()+1,parent.row()+1);
+            new Structure::StringFile("",name.toStdString(),(Structure::Directory*)parent.internalPointer() );
+            endInsertRows();
+            return true;
+            break;
+        }
+        case Structure::File::STRING16 :
+        {
+            beginInsertRows(parent,parent.row()+1,parent.row()+1);
+            new Structure::String16File(u"",name.toStdString(),(Structure::Directory*)parent.internalPointer() );
+            endInsertRows();
+            return true;
+            break;
+        }
+        case Structure::File::STRING32 :
+        {
+            beginInsertRows(parent,parent.row()+1,parent.row()+1);
+            new Structure::String32File(U"",name.toStdString(),(Structure::Directory*)parent.internalPointer() );
+            endInsertRows();
+            return true;
+            break;
+        }
+        default:
+        {
+            return false;
+            break;
+        }
+        }
+    }
+    else return false;
+}
 bool ElementContainerItem::removeRows(int row, int count, const QModelIndex &parent)
 {
     if(parent.isValid()) {
