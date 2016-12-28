@@ -23,7 +23,8 @@ void MainWindow::UpdateName()
 
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
-    cur_elem = (Structure::Element*)index.internalPointer();
+    cur_index = index;
+    cur_elem = (Structure::Element*)cur_index.internalPointer();
     UpdateName();
 }
 
@@ -39,4 +40,20 @@ void MainWindow::on_AcceptNameChange_clicked()
         cur_elem->SetName(ui->NameEditor->toPlainText().toStdString()  );
     }
     UpdateName();
+}
+void MainWindow::UpdateElement()
+{
+    cur_elem = (Structure::Element*)cur_index.internalPointer();
+}
+
+void MainWindow::on_DeleteButton_clicked()
+{
+    if(cur_index.isValid())
+    {
+        QModelIndex temp_index = cur_index;
+        cur_index = temp_index.parent();
+        UpdateElement();
+        UpdateName();
+        if(temp_index.parent().isValid()) ui->treeView->model()->removeRow(temp_index.row(),temp_index.parent());
+    }
 }

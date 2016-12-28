@@ -25,10 +25,14 @@ private slots:
 
     void on_AcceptNameChange_clicked();
 
+    void on_DeleteButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Structure::Element* cur_elem;
+    QModelIndex cur_index;
     void UpdateName();
+    void UpdateElement();
 };
 
 #endif // MAINWINDOW_HPP

@@ -5,6 +5,21 @@ ElementContainerItem::ElementContainerItem()
 {
     root_dir = Structure::ROOT_DIRECTORY;
 }
+bool ElementContainerItem::removeRows(int row, int count, const QModelIndex &parent)
+{
+    if(parent.isValid()) {
+        Structure::Element* parent_elem = (Structure::Element*)parent.internalPointer();
+        if(!parent_elem) return false;
+        if(!parent_elem->IsDirectory()) return false;
+        Structure::Directory* parent_dir = (Structure::Directory*)parent_elem;
+        if(rowCount(parent) < row+count) return false;
+        beginRemoveRows(parent,row,row+count);
+        for(int i = 0;i < count;++i) delete parent_dir->GetPElementByRow(row);
+        endRemoveRows();
+        return true;
+    }
+    else return false;
+}
 
 QVariant ElementContainerItem::data(const QModelIndex &index, int role) const
 {
@@ -54,28 +69,12 @@ QModelIndex ElementContainerItem::index(int row, int column, const QModelIndex &
 }
 QModelIndex ElementContainerItem::parent(const QModelIndex &child) const
 {
-    /*Structure::Element* parent = (Structure::Element*)child.internalPointer();
-
-    if(!parent)
-      return QModelIndex();
-
-    int row = 0;
-    Structure::Directory* higher_parent = parent->GetParent();
-
-    if(higher_parent)
-    {
-      Structure::ElementContainer* child_list = higher_parent->GetContainer();
-      for(Structure::ElementIterator it = child_list->begin();it != child_list->end() && (*it) != parent;++row,++it)
-      {
-          ;
-      }
-    }
-
-    return createIndex(row, 0, higher_parent);*/
+    if(!child.isValid()) return QModelIndex();
     Structure::Element* element = (Structure::Element*)child.internalPointer();
 
     Q_ASSERT(element);
     Structure::Directory* parent = element->GetParent();
+    if(!parent) return QModelIndex();
     if(parent == root_dir) return QModelIndex();
 
     int row = 0;
@@ -85,7 +84,7 @@ QModelIndex ElementContainerItem::parent(const QModelIndex &child) const
     {
         Structure::ElementContainer* children = higher_parent->GetContainer();
         Structure::ElementIterator it;
-      for(it = children->begin(), row = 0;it != children->end() && (*it) != parent;++row,++it);
+      if(!children->empty()) for(it = children->begin(), row = 0;it != children->end() && (*it) != parent;++row,++it);
     }
 
     return createIndex(row, 0, parent);
