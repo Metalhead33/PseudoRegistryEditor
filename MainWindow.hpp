@@ -19,8 +19,16 @@ public:
 
 private slots:
 
+    void on_treeView_clicked(const QModelIndex &index);
+
+    void on_RevertNameButton_clicked();
+
+    void on_AcceptNameChange_clicked();
+
 private:
     Ui::MainWindow *ui;
+    Structure::Element* cur_elem;
+    void UpdateName();
 };
 
 #endif // MAINWINDOW_HPP
