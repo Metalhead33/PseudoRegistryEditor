@@ -15,9 +15,12 @@ LIBS += -L"/usr/local/lib" -lRegistryStructure
 
 SOURCES += main.cpp\
         MainWindow.cpp \
-    ElementContainerItem.cpp
+    ElementContainerItem.cpp \
+    AddNewElement.cpp
 
 HEADERS  += MainWindow.hpp \
-    ElementContainerItem.hpp
+    ElementContainerItem.hpp \
+    AddNewElement.h
 
-FORMS    += MainWindow.ui
+FORMS    += MainWindow.ui \
+    AddNewElement.ui

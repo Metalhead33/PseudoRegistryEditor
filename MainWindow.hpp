@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTreeWidget>
 #include "ElementContainerItem.hpp"
+#include "AddNewElement.h"
 
 namespace Ui {
 class MainWindow;
@@ -31,10 +32,14 @@ private slots:
 
     void on_AcceptChangesButton_clicked();
 
+    void on_NewElementButton_clicked();
+
 private:
-    Ui::MainWindow *ui;
     Structure::Element* cur_elem;
     QModelIndex cur_index;
+    ElementContainerItem* container;
+    Ui::MainWindow *ui;
+    AddNewElement* element_adder;
     void UpdateName();
     void UpdateElement();
     void UpdateDisplay();

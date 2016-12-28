@@ -34,6 +34,7 @@ bool ElementContainerItem::AddFile(const QModelIndex &parent,Structure::File::Fi
 {
     if(parent.isValid())
     {
+        if( ((Structure::Directory*)parent.internalPointer())->GetPElementByName(name.toStdString() ) ) return false;
         switch(type)
         {
         case Structure::File::BOOL :

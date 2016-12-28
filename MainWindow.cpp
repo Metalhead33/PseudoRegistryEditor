@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->treeView->setModel(new ElementContainerItem());
+    ui->treeView->setModel(container = new ElementContainerItem());
     cur_elem = 0;
     UpdateDisplay();
     UpdateName();
@@ -60,9 +60,11 @@ void MainWindow::UpdateDisplay()
             ui->AcceptChangesButton->setHidden(true);
             ui->RevertButton->setHidden(true);
             ui->BooleanCombobox->setHidden(true);
+            ui->NewElementButton->setHidden(false);
         }
         else
         {
+        ui->NewElementButton->setHidden(true);
         ui->ContextEditor->setHidden(false);
         ui->AcceptChangesButton->setHidden(false);
         ui->RevertButton->setHidden(false);
@@ -264,4 +266,10 @@ void MainWindow::on_AcceptChangesButton_clicked()
         }
     }
     UpdateDisplay();
+}
+
+void MainWindow::on_NewElementButton_clicked()
+{
+    element_adder = new AddNewElement(this,container,cur_index);
+    element_adder->show();
 }
